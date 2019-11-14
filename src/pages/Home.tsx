@@ -1,51 +1,92 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonImg, IonFab, IonFabButton, IonIcon } from '@ionic/react';
-import React, { Component } from 'react';
+import { IonContent, 
+    IonHeader, 
+    IonPage, 
+    IonTitle, 
+    IonToolbar, 
+    IonSearchbar, 
+    IonList, 
+    IonBadge, 
+    IonLabel, 
+    IonNote, 
+    IonCheckbox, 
+    IonItem, 
+    IonFab, 
+    IonFabButton, 
+    IonIcon, 
+    IonButton } from '@ionic/react';
+import React from 'react';
+import { RouteComponentProps } from 'react-router';
 
-import { Plugins, CameraResultType } from '@capacitor/core';
-const { Camera } = Plugins;
+import { add } from 'ionicons/icons';
 
-const INITIAL_STATE = {
-  photo: '',
-};
-export class Home extends Component {
-  state: any = {};
-  props: any = {};
-  constructor(props: any) {
-    super(props);
-    this.state = { ...INITIAL_STATE };
-  }
+import { Plugins } from '@capacitor/core';
 
-  async takePicture() {
-    const image = await Camera.getPhoto({
-    quality: 90,
-    allowEditing: false,
-    resultType: CameraResultType.Uri
-  });
-  var imageUrl = image.webPath;
-  // Can be set to the src of an image now
-  this.setState({
-    photo: imageUrl
-  })
-  };
+const { Device, Modals } = Plugins;
 
-  render() {
-    const { photo } = this.state;
+
+
+
+class Home extends React.Component<RouteComponentProps> {
+    constructor(props: any) {
+        super(props);
+        this.showDeviceInfo = this.showDeviceInfo.bind(this);
+    }
+
+    async showDeviceInfo() {
+        let info = await Device.getInfo();
+        await Modals.alert({
+            title: 'Info',
+            message: `UUID: ${info.uuid};
+            Model: ${info.model}`
+        });
+    }
+
+
+
+render() {
     return (
-      <IonPage>
-        <IonHeader>
-          <IonToolbar>
-            <IonTitle>Ionic Blank</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <IonContent className="ion-padding">
-          <IonImg style={{ 'border': '1px solid black', 'minHeight': '100px' }} src={photo} ></IonImg>
-          <IonFab color="primary" vertical="bottom" horizontal="center" slot="fixed">
-            <IonFabButton color="primary" onClick={() => this.takePicture()}></IonFabButton>
-          </IonFab>
-        </IonContent>
-      </IonPage >
-    );
-  };
+        <IonPage>
+          <IonHeader>
+            <IonToolbar>
+              <IonTitle>Ionic Blank</IonTitle>
+            </IonToolbar>
+            <IonSearchbar></IonSearchbar>
+            <IonButton onClick={() => this.showDeviceInfo()}>
+                Show Device Info
+            </IonButton>
+          </IonHeader>
+          <IonContent>
+        <IonList>
+          <IonItem>
+            <IonCheckbox slot="start" />
+            <IonLabel>
+              <h1>Create Idea</h1>
+              <IonNote>Run Idea by Brandy</IonNote>
+            </IonLabel>
+            <IonBadge color="success" slot="end">
+              5 Days
+            </IonBadge>
+          </IonItem>
+          <IonItem>
+            <IonCheckbox slot="start"/>
+            <IonLabel>
+              <h1>Set up goals</h1>
+              <IonNote>For every week</IonNote>
+            </IonLabel>
+            <IonBadge color="success" slot="end">
+              1 Day
+            </IonBadge>
+          </IonItem>
+        </IonList>
+        <IonFab vertical="bottom" horizontal="end" slot="fixed">
+          <IonFabButton  onClick={() => this.props.history.push('./new')}>
+            <IonIcon icon={add} />
+          </IonFabButton>
+        </IonFab>
+      </IonContent>
+        </IonPage>
+      );
 }
+};
 
 export default Home;
