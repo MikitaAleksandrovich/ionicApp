@@ -3,6 +3,6 @@
   "appName": "ionicApp",
   "bundledWebRuntime": true,
   "npmClient": "npm",
-  "webDir": "www",
+  "webDir": "src",
   "cordova": {}
 }

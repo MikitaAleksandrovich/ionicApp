@@ -1,8 +1,8 @@
 {
   "appId": "io.ionic.starter",
   "appName": "ionicApp",
-  "bundledWebRuntime": false,
+  "bundledWebRuntime": true,
   "npmClient": "npm",
-  "webDir": "build",
+  "webDir": "src",
   "cordova": {}
 }
