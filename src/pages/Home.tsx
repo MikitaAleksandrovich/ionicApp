@@ -1,92 +1,53 @@
-import { IonContent, 
-    IonHeader, 
-    IonPage, 
-    IonTitle, 
-    IonToolbar, 
-    IonSearchbar, 
-    IonList, 
-    IonBadge, 
-    IonLabel, 
-    IonNote, 
-    IonCheckbox, 
-    IonItem, 
-    IonFab, 
-    IonFabButton, 
-    IonIcon, 
-    IonButton } from '@ionic/react';
 import React from 'react';
+import { 
+  IonContent,
+  IonPage, 
+  IonTitle, 
+  IonToolbar, 
+  IonList,
+  IonItem,
+  IonCheckbox,
+  IonLabel,
+  IonNote,
+  IonBadge,
+  IonFab,
+  IonFabButton,
+  IonIcon
+} from '@ionic/react';
+import { add } from 'ionicons/icons';
 import { RouteComponentProps } from 'react-router';
 
-import { add } from 'ionicons/icons';
+const Home: React.FC<RouteComponentProps> = (props) => {
+  return (
+    <IonPage>
+      <IonToolbar>
+        <IonTitle> </IonTitle>
+      </IonToolbar>
+      <IonContent className="ion-padding">
+        React - Ionic
 
-import { Plugins } from '@capacitor/core';
-
-const { Device, Modals } = Plugins;
-
-
-
-
-class Home extends React.Component<RouteComponentProps> {
-    constructor(props: any) {
-        super(props);
-        this.showDeviceInfo = this.showDeviceInfo.bind(this);
-    }
-
-    async showDeviceInfo() {
-        let info = await Device.getInfo();
-        await Modals.alert({
-            title: 'Info',
-            message: `UUID: ${info.uuid};
-            Model: ${info.model}`
-        });
-    }
-
-
-
-render() {
-    return (
-        <IonPage>
-          <IonHeader>
-            <IonToolbar>
-              <IonTitle>Ionic Blank</IonTitle>
-            </IonToolbar>
-            <IonSearchbar></IonSearchbar>
-            <IonButton onClick={() => this.showDeviceInfo()}>
-                Show Device Info
-            </IonButton>
-          </IonHeader>
-          <IonContent>
         <IonList>
           <IonItem>
             <IonCheckbox slot="start" />
             <IonLabel>
-              <h1>Create Idea</h1>
-              <IonNote>Run Idea by Brandy</IonNote>
+              <h1>App Idea</h1>
+              <IonNote>Make Native Cross-platform Apps</IonNote>
             </IonLabel>
             <IonBadge color="success" slot="end">
               5 Days
             </IonBadge>
           </IonItem>
-          <IonItem>
-            <IonCheckbox slot="start"/>
-            <IonLabel>
-              <h1>Set up goals</h1>
-              <IonNote>For every week</IonNote>
-            </IonLabel>
-            <IonBadge color="success" slot="end">
-              1 Day
-            </IonBadge>
-          </IonItem>
         </IonList>
+
         <IonFab vertical="bottom" horizontal="end" slot="fixed">
-          <IonFabButton  onClick={() => this.props.history.push('./new')}>
+          <IonFabButton onClick={() => props.history.push('/new')}>
             <IonIcon icon={add} />
           </IonFabButton>
         </IonFab>
+		
       </IonContent>
-        </IonPage>
-      );
-}
+    </IonPage>
+  );
 };
 
 export default Home;
